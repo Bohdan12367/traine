@@ -1,7 +1,6 @@
-import {LightningElement,track,wire} from 'lwc';
+import {LightningElement, track} from 'lwc';
 
-import sendWeather from '@salesforce/apex/WeatherRest.weatherReturn';
-//import getW from '@salesforce/apex/WeatherRest.getWeather';
+import sendWeather from '@salesforce/apex/WeatherController.handler';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class InputCity extends LightningElement {
@@ -10,24 +9,24 @@ export default class InputCity extends LightningElement {
     @track imageURL;
 
     getCity () {
-         sendWeather ({city: this.searchKey})
-            // .then(result=>{
-            //     return getW({city:this.searchKey});
-            //})
+        sendWeather ({city: this.searchKey})
             .then(result=>{
                 this.weather = result;
                 this.imageURL = result.Image__c;
-                console.log('success');
             })
             .catch(error =>
                 this.dispatchEvent (
-                        new ShowToastEvent ({
-                            title: 'Error',
-                            variant: 'error',
-                            message: 'Please enter valid city',
-                        })
+                    new ShowToastEvent ({
+                        title: 'Error',
+                        variant: 'error',
+                        message: 'Please enter valid city',
+                    })
                 ));
         this.weather = null;
+    }
+
+    get temp() {
+        return Number(this.weather.Temperature__c).toFixed(2);
     }
     handleChange(event) {
         this.searchKey = event.target.value;
