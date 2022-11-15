@@ -7,7 +7,7 @@ public class WeatherRestTest {
         insert weath;
 
         Test.startTest();
-        Weather__c weather = WeatherRest.weatherReturn('Lviv');
+        Weather__c weather = WeatherController.returnWeather('Lviv');
         Test.stopTest();
         System.assertEquals('1019', weather.Pressure__c);
     }
@@ -16,8 +16,24 @@ public class WeatherRestTest {
         Test.setMock(HttpCalloutMock.class, new WeatherRestMock());
 
         Test.startTest();
-        Weather__c weather = WeatherRest.weatherReturn('Lviv');
+        Weather__c weather = WeatherController.returnWeather('Lviv');
         Test.stopTest();
         System.assertEquals('1019', weather.Pressure__c);
     }
+<<<<<<< HEAD
+
+    @IsTest
+    static void TestFalse() {
+        Test.setMock(HttpCalloutMock.class, new WeatherRestMockFalse());
+
+        Test.startTest();
+        try {
+            WeatherController.returnWeather('Lvivvvv');
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains('No forecast for city '));
+        }
+        Test.stopTest();
+    }
+=======
+>>>>>>> d547c3e7129e73798b704a49128089f329641984
 }
