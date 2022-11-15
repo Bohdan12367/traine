@@ -20,7 +20,6 @@ public class WeatherRestTest {
         Test.stopTest();
         System.assertEquals('1019', weather.Pressure__c);
     }
-<<<<<<< HEAD
 
     @IsTest
     static void TestFalse() {
@@ -34,6 +33,4 @@ public class WeatherRestTest {
         }
         Test.stopTest();
     }
-=======
->>>>>>> d547c3e7129e73798b704a49128089f329641984
 }
